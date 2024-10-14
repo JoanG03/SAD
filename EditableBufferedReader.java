@@ -1,6 +1,7 @@
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.BufferedReader;
 
 public class EditableBufferedReader extends BufferedReader{
  
@@ -12,9 +13,8 @@ public class EditableBufferedReader extends BufferedReader{
     public void setRaw() throws IOException{ 
         try{
             String[] comm = {"/bin/sh", "-c", "stty raw -echo </dev/tty"}; 
-
+            Runtime.getRuntime().exec(comm).waitFor();
         }catch(InterruptedException ex){
-            Thread.currentThread().interrupt();
             ex.printStackTrace();
         }
     }
@@ -29,49 +29,82 @@ public class EditableBufferedReader extends BufferedReader{
             ex.printStackTrace();
         }
     }
-
+    @Override
     public int read() throws IOException{
-        int caracter = 0;
         setRaw();
-        caracter = super.read();
+        int caracter = super.read();
+        if (caracter == Keys.ESC) { // Comprobamos si es una secuencia de escape
+        caracter = super.read(); // Leemos el siguiente carácter para verificar si es una tecla especial
 
-        if(caracter == Keys.ESC){
-            caracter = super.read(); 
-            if(caracter == Keys.ESTILO){
-                caracter = 
-                return caracter;
-            }
-
-            caracter= super.read();
-        
+            if (caracter == Keys.CSI) {
+                caracter = super.read(); // Leemos el tercer carácter para identificar la tecla exacta
                 switch (caracter) {
-                    case Keys.INSERT:
-                        caracter = 
-                        break;
                     case Keys.RIGHT:
-                        caracter =
-                        break;
+                        return Keys.RIGHT;                   
                     case Keys.LEFT:
-                        caracter =
-                        break;
-                    case Keys.INICIO:
-                        caracter = 
-                        break;
+                        return Keys.LEFT;                    
+                    case Keys.INSERT:
+                        return Keys.INSERT;                     
                     case Keys.FIN:
-                        caracter = 
-                        break;
+                        return Keys.FIN;                     
+                    case Keys.INICIO:
+                        return Keys.INICIO;                   
                     case Keys.SUPR:
-                        caracter = 
-                        break;
-                    default:
-                        // Omite el "~" si es una secuencia de escape numérica
-                        if (caracter <= 64) {
-                            super.read();
-                        }
+                        super.read();
+                        return Keys.SUPR;
+                    default:                
                         break;
                 }
+            } else if (caracter == Keys.ALTRES_SEQ) {
+                return Keys.ALTRES_SEQ; 
             }
-
-            unsetRaw();
-            return caracter;
+        }
+    unsetRaw(); 
+    return caracter; 
     }
+
+    public String readline() throws IOException{
+        setRaw();
+        Line line = new Line();
+        int caracter = 0;
+
+        while (caracter != '\r') {
+           caracter = read(); 
+            switch (caracter) {
+                case '\r':
+                    break;
+                case Keys.RIGHT:
+                    line.moveRight();
+                    System.out.print("\u001b[1C");
+                    break;
+                case Keys.LEFT:
+                    line.moveLeft();
+                    System.out.print("\u001b[1D");
+                    break;
+                case Keys.INICIO:
+                    line.moveToStart();
+                    break;
+                case Keys.FIN:
+                    line.moveToEnd();
+                    break;
+                case Keys.SUPR:
+                    line.supr();
+                    System.out.print("\u001b[1C");
+                    break;
+                case Keys.BACKSPACE:
+                    line.backspace();                    
+                    break;
+                case '\n': 
+                    unsetRaw();
+                    System.out.print("\n"); 
+                    return line.toString();
+                default:
+                    line.write((char) caracter);
+                    System.out.print((char) caracter);
+                    break;
+            }
+        }
+        unsetRaw();
+        return line.toString();
+    }
+}
