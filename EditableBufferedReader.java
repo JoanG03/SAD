@@ -4,28 +4,28 @@ import java.io.IOException;
 import java.io.Reader;
 
 public class EditableBufferedReader extends BufferedReader{
- 
+    public final Line line;
 
-    public EditableBufferedReader(Reader text){
+    public EditableBufferedReader(ImputStreamReader text){
         super(text);
+        line = new Line();
     }
 
     public void setRaw() throws IOException{ 
         try{
-            String[] comm = {"/bin/sh", "-c", "stty raw -echo </dev/tty"}; 
-            Runtime.getRuntime().exec(comm).waitFor();
-        }catch(InterruptedException ex){
+            ProcessBuilder proces = new ProcessBuilder("sh", "-c", "stty -echo raw < /dev/tty");
+            process.inheritIO().start();
+        }catch(IOException ex){
             ex.printStackTrace();
         }
     }
 
     public void unsetRaw() throws IOException{  
         try{
-            String[] comm = {"/bin/sh", "-c", "stty cooked echo </dev/tty"};
-            Runtime.getRuntime().exec(comm).waitFor();
-    
-        }catch(InterruptedException ex){
-            Thread.currentThread().interrupt();
+            ProcessBuilder process = new ProcessBuilder("sh", "-c", "stty echo cooked < /dev/tty");
+            process.inheritIO().start();
+ 
+        }catch(IOException ex){
             ex.printStackTrace();
         }
     }
@@ -34,7 +34,7 @@ public class EditableBufferedReader extends BufferedReader{
         setRaw();
         int caracter = super.read();
         if (caracter == Keys.ESC) { // Comprobamos si es una secuencia de escape
-        caracter = super.read(); // Leemos el siguiente carácter para verificar si es una tecla especial
+            caracter = super.read(); // Leemos el siguiente carácter para verificar si es una tecla especial
 
             if (caracter == Keys.CSI) {
                 caracter = super.read(); // Leemos el tercer carácter para identificar la tecla exacta
@@ -47,8 +47,8 @@ public class EditableBufferedReader extends BufferedReader{
                         return Keys.INSERT;                     
                     case Keys.FIN:
                         return Keys.FIN;                     
-                    case Keys.INICIO:
-                        return Keys.INICIO;                   
+                    case Keys.HOME:
+                        return Keys.HOME;                   
                     case Keys.SUPR:
                         super.read();
                         return Keys.SUPR;
@@ -65,11 +65,10 @@ public class EditableBufferedReader extends BufferedReader{
 
     public String readline() throws IOException{
         setRaw();
-        Line line = new Line();
-        int caracter = 0;
+        int caracter = this.read();
 
-        while (caracter != '\r') {
-           caracter = read(); 
+        while (caracter != Keys.RETURN) {
+           caracter = this.read(); 
             switch (caracter) {
                 case '\r':
                     break;
@@ -94,10 +93,6 @@ public class EditableBufferedReader extends BufferedReader{
                 case Keys.BACKSPACE:
                     line.backspace();                    
                     break;
-                case '\n': 
-                    unsetRaw();
-                    System.out.print("\n"); 
-                    return line.toString();
                 default:
                     line.write((char) caracter);
                     System.out.print((char) caracter);
