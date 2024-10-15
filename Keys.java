@@ -1,7 +1,6 @@
 interface Keys {
 
 // Codificaciones de las secuencias de escape 
-    int DELETE = 8;
     int RETURN = 13;
     int BACKSPACE = 127;
 
