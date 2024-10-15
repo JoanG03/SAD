@@ -6,21 +6,21 @@ public class Line {
 	private boolean insert;
 
 	public Line() {
-		cursorPos = 0;
+		cursor = 0;
 		text = new StringBuilder();
 		insercio = false;
 	}
 
 	public int getPos() {
-		return this.cursorPos;
+		return this.cursor;
 	}
 
 	public void write(char ch) {
-        if (cursorPos < text.length()) {
-            if (insert) text.setCharAt(cursorPos, ch);
+        if (cursor < text.length()) {
+            if (insert) text.setCharAt(cursor, ch);
             else {
                 System.out.print("\u001b[1@");
-                text.insert(cursorPos, ch);
+                text.insert(cursor, ch);
             }
         } else {
             text.append(ch);
@@ -30,17 +30,17 @@ public class Line {
 
 
 	public void backspace() {
-		if (cursorPos > 0) {
-			cursorPos--;
-			text.deleteCharAt(cursorPos);
+		if (cursor > 0) {
+			cursor--;
+			text.deleteCharAt(cursor);
 			System.out.print("\u001b[D");
 			System.out.print("\u001b[P");
 		}
 	}
 
-	public void delete() {
-		if (cursorPos >= 0 && cursorPos < text.length()) {
-			text.deleteCharAt(cursorPos);
+	public void supr() {
+		if (cursor >= 0 && cursor < text.length()) {
+			text.deleteCharAt(cursor);
 			System.out.print("\u001b[P");
 		}
 	}
@@ -50,8 +50,8 @@ public class Line {
 	}
 
 	public void moveRight() {
-		if (cursorPos < text.length()) {
-			cursorPos++;
+		if (cursor < text.length()) {
+			cursor++;
 			System.out.print("\u001b[C");
 		}
 	}
@@ -64,12 +64,12 @@ public class Line {
 	}
 
 	public void home() {
-		cursorPos = 0;
+		cursor = 0;
 		System.out.print("\u001b[G");
 	}
 
 	public void fin() {
-		cursorPos = text.length();
+		cursor = text.length();
 		System.out.print("\u001b[" + (text.length() + 1) + "G");
 	}
 
