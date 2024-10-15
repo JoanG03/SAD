@@ -2,11 +2,11 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-
+import java.io.*;
 public class EditableBufferedReader extends BufferedReader{
     public final Line line;
 
-    public EditableBufferedReader(ImputStreamReader text){
+    public EditableBufferedReader(InputStreamReader text){
         super(text);
         line = new Line();
     }
@@ -55,9 +55,7 @@ public class EditableBufferedReader extends BufferedReader{
                     default:                
                         break;
                 }
-            } else if (caracter == Keys.ALTRES_SEQ) {
-                return Keys.ALTRES_SEQ; 
-            }
+            } 
         }
     unsetRaw(); 
     return caracter; 
@@ -79,7 +77,7 @@ public class EditableBufferedReader extends BufferedReader{
                 case Keys.LEFT:
                     line.moveLeft();
                     break;
-                case Keys.INICIO:
+                case Keys.HOME:
                     line.moveToStart();
                     break;
                 case Keys.FIN:
