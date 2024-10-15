@@ -18,5 +18,5 @@ interface Keys {
     int HOME = 72;        // ^[[H  (Home)
     int INSERT = 50;        // ^[[2~ (Insertar)
     int SUPR = 51;          // ^[[3~ (Suprimir)
-
+    
 }
