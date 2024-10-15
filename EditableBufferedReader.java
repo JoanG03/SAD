@@ -70,15 +70,14 @@ public class EditableBufferedReader extends BufferedReader{
         while (caracter != Keys.RETURN) {
            caracter = this.read(); 
             switch (caracter) {
-                case '\r':
+                case Keys.INSERT:
+                    line.insert();
                     break;
                 case Keys.RIGHT:
                     line.moveRight();
-                    System.out.print("\u001b[1C");
                     break;
                 case Keys.LEFT:
                     line.moveLeft();
-                    System.out.print("\u001b[1D");
                     break;
                 case Keys.INICIO:
                     line.moveToStart();
@@ -88,7 +87,6 @@ public class EditableBufferedReader extends BufferedReader{
                     break;
                 case Keys.SUPR:
                     line.supr();
-                    System.out.print("\u001b[1C");
                     break;
                 case Keys.BACKSPACE:
                     line.backspace();                    
