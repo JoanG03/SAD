@@ -1,80 +1,84 @@
 
-class Line {
-    private StringBuilder text;
-    private int cursor;
+public class Line {
 
-    public Line() {
-        text = new StringBuilder();
-        cursor = 0;
-    }
+	private int cursorPos;
+	private StringBuilder text;
+	private boolean insert;
 
-    public void write(char c) {
-        text.insert(cursor, c);
-        cursor++;
-        System.out.print(c);
-    }
+	public Line() {
+		cursorPos = 0;
+		text = new StringBuilder();
+		insercio = false;
+	}
 
-    public void backspace() {
-        if (cursor > 0) {
-            cursor--;
-            text.deleteCharAt(cursor);
-            System.out.print("\u001b[1D");
-            System.out.print("\u001b[P");
-        }
-    }
+	public int getPos() {
+		return this.cursorPos;
+	}
 
-    public void moveRight() {
-        if (cursor < text.length()) {
-            cursor++;
-        }
-    }
-
-    public void moveLeft() {
-        if (cursor > 0) {
-            cursor--;
-        }
-    }
-
-    public void moveToStart() {
-        int col = cursor;
-        cursor = 0;
-        System.out.print("\u001b[" + cursor + "D");
-        cursor = 0;
-    }
-
-    public void moveToEnd() {
-        int numLletres = text.length();
-        cursor = numLletres;
-        System.out.print("\u001b[" + (numLletres) + "C");
-    }
-
-    public void insert(char c) {
-        if (cursor < text.length()) {
-            text.setCharAt(cursor, c);
+	public void write(char ch) {
+        if (cursorPos < text.length()) {
+            if (insert) text.setCharAt(cursorPos, ch);
+            else {
+                System.out.print("\u001b[1@");
+                text.insert(cursorPos, ch);
+            }
         } else {
-            text.append(c);
+            text.append(ch);
         }
-        cursor++;
+        cursorPos++;
     }
 
-    public void supr() {
-        if (cursor < text.length()) {
-            text.deleteCharAt(cursor);
-            System.out.print("\u001b[P");
-        }
-    }
 
-    public int getCol() {
-        return cursor;
-    }
+	public void backspace() {
+		if (cursorPos > 0) {
+			cursorPos--;
+			text.deleteCharAt(cursorPos);
+			System.out.print("\u001b[D");
+			System.out.print("\u001b[P");
+		}
+	}
 
-    public int getNumLetters() {
-        return text.length();
-    }
+	public void delete() {
+		if (cursorPos >= 0 && cursorPos < text.length()) {
+			text.deleteCharAt(cursorPos);
+			System.out.print("\u001b[P");
+		}
+	}
 
-    @Override
-    public String toString() {
-        return text.toString();
-    }
+	public void insert() {
+		insert = !insert;
+	}
+
+	public void moveRight() {
+		if (cursorPos < text.length()) {
+			cursorPos++;
+			System.out.print("\u001b[C");
+		}
+	}
+
+	public void moveLeft() {
+		if (cursorPos > 0) {
+			cursorPos--;
+			System.out.print("\u001b[D");
+		}
+	}
+
+	public void home() {
+		cursorPos = 0;
+		System.out.print("\u001b[G");
+	}
+
+	public void fin() {
+		cursorPos = text.length();
+		System.out.print("\u001b[" + (text.length() + 1) + "G");
+	}
+
+	public String getLine() {
+		return text.toString();
+	}
+
+	@Override
+	public String toString() {
+		return text.toString();
+	}
 }
-
