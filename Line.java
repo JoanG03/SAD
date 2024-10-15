@@ -1,9 +1,9 @@
 
 public class Line {
 
-	private int cursorPos;
+	private int cursor;
 	private StringBuilder text;
-	private boolean insert;
+	private boolean insercio;
 
 	public Line() {
 		cursor = 0;
@@ -17,7 +17,7 @@ public class Line {
 
 	public void write(char ch) {
         if (cursor < text.length()) {
-            if (insert) text.setCharAt(cursor, ch);
+            if (insercio) text.setCharAt(cursor, ch);
             else {
                 System.out.print("\u001b[1@");
                 text.insert(cursor, ch);
@@ -25,7 +25,7 @@ public class Line {
         } else {
             text.append(ch);
         }
-        cursorPos++;
+        cursor++;
     }
 
 
@@ -46,7 +46,7 @@ public class Line {
 	}
 
 	public void insert() {
-		insert = !insert;
+		insercio = !insercio;
 	}
 
 	public void moveRight() {
@@ -57,18 +57,18 @@ public class Line {
 	}
 
 	public void moveLeft() {
-		if (cursorPos > 0) {
-			cursorPos--;
+		if (cursor > 0) {
+			cursor--;
 			System.out.print("\u001b[D");
 		}
 	}
 
-	public void home() {
+	public void moveToStart() {
 		cursor = 0;
 		System.out.print("\u001b[G");
 	}
 
-	public void fin() {
+	public void moveToEnd() {
 		cursor = text.length();
 		System.out.print("\u001b[" + (text.length() + 1) + "G");
 	}
