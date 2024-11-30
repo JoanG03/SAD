@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscaminas</title>
+    <link rel="stylesheet" href="lib/style.css">
+</head>
+<body>
+    <h1>Buscaminas</h1>
+    <p>Selecciona la dificultad:</p>
+    <div class="botones">
+        <button class="btn facil" onclick="initJuego(10, 10)">Fácil</button>
+        <button class="btn normal" onclick="initJuego(15, 35)">Normal</button>
+        <button class="btn dificil" onclick="initJuego(20, 80)">Difícil</button>
+    </div>
+    <div id="board"></div>
+    <script src="lib/script.js"></script>
+</body>
+</html>
