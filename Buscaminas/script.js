@@ -140,10 +140,9 @@ function revelarTablero(size) {
                 } else if (value === 'B') {
                     cell.textContent = '💣'; // Si el valor es una bomba ('B'), se muestra el emoji de bomba.
                 } else {
-                    cell.textContent = value; // En cualquier otro caso (un número), se muestra el valor directamente.
+                    cell.textContent = value; // Se muestra el valor directamente.
                 }
             }
         }
     }
-  
 }
