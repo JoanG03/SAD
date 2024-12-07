@@ -48,7 +48,7 @@ p {
 .cell {
     width: 25px;
     height: 25px;
-    border: 1px solid #ccc;
+    border: 1px solid #cccccc;
     text-align: center;
     line-height: 25px;
     cursor: pointer;
@@ -57,4 +57,36 @@ p {
 .cell.open {
     background-color: #e0e0e0;
     cursor: default;
+    font-weight: bold;
+}
+.cell.open.numero-1 {
+    color: rgb(8, 8, 247);
+}
+
+.cell.open.numero-2 {
+    color: rgb(3, 148, 3);
+}
+
+.cell.open.numero-3 {
+    color: rgb(247, 3, 3);
+}
+
+.cell.open.numero-4 {
+    color: rgb(3, 3, 142);
+}
+
+.cell.open.numero-5 {
+    color: rgb(142, 5, 5);
+}
+
+.cell.open.numero-6 {
+    color: rgb(6, 249, 249);
+}
+
+.cell.open.numero-7 {
+    color: rgb(0, 0, 0);
+}
+
+.cell.open.numero-8 {
+    color: rgb(234, 3, 218);
 }
