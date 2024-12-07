@@ -134,7 +134,6 @@ function revelarTablero(size) {
             if (cell && !cell.classList.contains('open')) {
                 cell.classList.add('open');
                 let value = tablero[i][j];
-                console.log(`Valor en tablero[${i}][${j}]:`, value);
                 if (value === 0) {
                     cell.textContent = ''; // Si el valor es 0, la celda se deja vacía.
                 } else if (value === 'B') {
