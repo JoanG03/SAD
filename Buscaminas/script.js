@@ -133,7 +133,6 @@ function openCell(row, col, size) {
             cell.classList.add('numero-8');
         }
     }
-s
     if (value === 'B') {
         cell.textContent = '💣';
         alert('¡Perdiste! Reinicia el juego para intentarlo de nuevo.');
