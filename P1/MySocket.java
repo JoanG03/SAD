@@ -38,7 +38,4 @@ public class MySocket {
             e.printStackTrace(); 
         }
     }
-	public void println(String line) {
-		this.writer.println(line);
-	}
 }
