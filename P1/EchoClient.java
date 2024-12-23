@@ -16,7 +16,6 @@ public class EchoClient {
                     while ((line = kbd.readLine()) != null) {
                         s.println(line);
                     }
-                    // close s for writing
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
