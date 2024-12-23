@@ -9,7 +9,7 @@ public class EchoServer {
                 public void run() {
                     String line;
                     while ((line = s.readLine()) != null) {
-                        s.println(line);
+                        s.writeLine(line);
                     }
                     s.close();
                 }
