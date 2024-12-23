@@ -14,7 +14,7 @@ public class EchoClient {
                 BufferedReader kbd = new BufferedReader(new InputStreamReader(System.in));
                 try {
                     while ((line = kbd.readLine()) != null) {
-                        s.println(line);
+                        s.writeLine(line);
                     }
                 } catch (IOException ex) {
                     ex.printStackTrace();
