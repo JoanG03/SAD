@@ -36,14 +36,14 @@ public class Server {
         usuarios.remove(nickname);
     }
 
-    public static void broadcast(String nickname, String line){
+	public static void broadcast(String nickname, String line){
             for (Entry<String, MySocket> entry : usuarios.entrySet()) {
                 String currentUsr = entry.getKey();
                 MySocket currentSocket = entry.getValue();
                 if(!currentUsr.equals(nickname)){
                     currentSocket.writeLine(nickname + ": " + line);
                 }
-		    }
-        }
-    }
+	    }
+    	}
+}
 
