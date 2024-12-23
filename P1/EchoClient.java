@@ -8,7 +8,6 @@ import java.net.UnknownHostException;
 public class EchoClient {
     public static void main(String[] args) throws NumberFormatException, UnknownHostException, IOException {
         MySocket s = new MySocket(args[0], Integer.parseInt(args[1]));
-        // Keyboard thread
         new Thread() {
             public void run() {
                 String line;
@@ -24,8 +23,6 @@ public class EchoClient {
                 s.close();
             }
         }.start();
-
-        // Console thread
         new Thread() {
             public void run() {
                 String line;
