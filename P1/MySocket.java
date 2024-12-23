@@ -20,7 +20,6 @@ public class MySocket {
         this.reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
         this.writer = new PrintWriter(s.getOutputStream(), true);
     }
-
     public String readLine() {
         try {
             return reader.readLine(); 
@@ -28,7 +27,6 @@ public class MySocket {
             return null; 
         }
     }
-
     public void writeLine(String message) {
         writer.println(message); 
     }
