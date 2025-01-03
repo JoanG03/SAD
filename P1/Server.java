@@ -1,4 +1,4 @@
-package P1_JL;
+package P1;
 import java.io.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
