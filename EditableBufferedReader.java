@@ -13,7 +13,7 @@ public class EditableBufferedReader extends BufferedReader{
 
     public void setRaw() throws IOException{ 
         try{
-            ProcessBuilder proces = new ProcessBuilder("sh", "-c", "stty -echo raw < /dev/tty");
+            ProcessBuilder process = new ProcessBuilder("sh", "-c", "stty -echo raw < /dev/tty");
             process.inheritIO().start();
         }catch(IOException ex){
             ex.printStackTrace();
