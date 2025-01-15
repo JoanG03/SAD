@@ -1,4 +1,4 @@
-package P0
+package P0;
 public class Line {
 
 	private int cursor;
