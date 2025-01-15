@@ -10,11 +10,10 @@ public class Line {
 		text = new StringBuilder();
 		insercio = false;
 	}
-
 	public int getPos() {
 		return this.cursor;
 	}
-
+	
 	public void write(char ch) {
         if (cursor < text.length()) {
             if (insercio) text.setCharAt(cursor, ch);
@@ -27,7 +26,6 @@ public class Line {
         }
         cursor++;
     }
-
 
 	public void backspace() {
 		if (cursor > 0) {
