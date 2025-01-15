@@ -15,17 +15,17 @@ public class Line {
 	}
 	
 	public void write(char ch) {
-        if (cursor < text.length()) {
-            if (insercio) text.setCharAt(cursor, ch);
-            else {
-                System.out.print("\u001b[1@");
-                text.insert(cursor, ch);
-            }
-        } else {
-            text.append(ch);
-        }
-        cursor++;
-    }
+		if (cursor < text.length()) {
+	        	if (insercio) text.setCharAt(cursor, ch);
+	        	else {
+	                	System.out.print("\u001b[1@");
+	                	text.insert(cursor, ch);
+	            	}
+	        } else {
+	            text.append(ch);
+	        }
+		cursor++;
+	}
 
 	public void backspace() {
 		if (cursor > 0) {
