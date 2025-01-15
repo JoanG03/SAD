@@ -10,6 +10,7 @@ public class Line {
 		text = new StringBuilder();
 		insercio = false;
 	}
+	
 	public int getPos() {
 		return this.cursor;
 	}
